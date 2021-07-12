@@ -1,7 +1,7 @@
 #
 ## Parametros
-DBUSER="root"
-DBPASS="1q2wAZSX3e4r"
-DBBASE="integraiot"
-DBHOST="localhost"
+DBUSER=""
+DBPASS=""
+DBBASE=""
+DBHOST=""
 PATHLOG="/di/logs/"
