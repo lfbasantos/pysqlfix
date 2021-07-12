@@ -7,6 +7,7 @@ from datetime import datetime
 #
 ## Import Params
 from _conf.conf import DBUSER, DBPASS, DBBASE, DBHOST, PATHLOG
+from param.param import MYSQLCHECK, DEBUG
 
 #
 ## Inicializacao de Variaveis
@@ -141,16 +142,15 @@ def deleteMensagemIn(conectaBase, ano, mes):
 def optimizeTable(tbl):
   msg="Iniciando Optimize..." + tbl
   gravaLog(1, fileLog, timestampLog, msg)
-  cmd = "c:/xampp/mysql/bin/mysqlcheck -u root -p\"1q2wAZSX3e4r\" integraiot " + tbl
+  cmd = MYSQLCHECK + "mysqlcheck -u root -p\"1q2wAZSX3e4r\" integraiot " + tbl
   os.system(cmd)
   msg="Optimize finalizado."
   gravaLog(1, fileLog, timestampLog, msg)
 
 
-
 #
 # Manutencao (Com Delete)
-def manutDB(ano, mes, fileLog, timestampLog):
+def manutDB(ano, mes, fileLog, timestampLog, DEBUG):
   msg="Validando Ano Mes: " +str(ano)+"-"+str(mes)
   gravaLog(1,fileLog, timestampLog, msg)
   gravaLog(1,fileLog, timestampLog, "Contando Rest...")
@@ -184,7 +184,8 @@ def manutDB(ano, mes, fileLog, timestampLog):
       gravaLog(1,fileLog, timestampLog, msg)
       msg="Realizando manutencao em mensagem para: " +str(ano)+"-"+str(mes)
       gravaLog(1,fileLog, timestampLog, msg)
-      deleteMensagemIn(conectaBase, ano, mes)
+      if DEBUG==0:
+        deleteMensagemIn(conectaBase, ano, mes)
     else:
       msg="ERRO verificar mensagem history <> mensagem para: " +str(ano)+"-"+str(mes)
       gravaLog(4,fileLog, timestampLog, msg)
@@ -200,9 +201,10 @@ def manutDB(ano, mes, fileLog, timestampLog):
       gravaLog(1,fileLog, timestampLog, msg)
       msg="Realizando manutencao em rest para: " +str(ano)+"-"+str(mes)
       gravaLog(1,fileLog, timestampLog, msg)
-      deleteRestIn(conectaBase, ano, mes)
+      if DEBUG==0:
+        deleteRestIn(conectaBase, ano, mes)
     else:
-      msg="ERRO verificarrest history <> rest para: " +str(ano)+"-"+str(mes)
+      msg="ERRO verificar! rest history <> rest para: " +str(ano)+"-"+str(mes)
       gravaLog(4,fileLog, timestampLog, msg)
   else:
     msg="Tabela Rest IN OK para:" +str(ano)+"-"+str(mes)
@@ -261,9 +263,9 @@ checkDB(ano, mes, fileLog, timestampLog)
 #
 ## Manut (Mes Atual -3 e Mes Atual -4)
 mes=mes-1
-manutDB(ano, mes, fileLog, timestampLog)
+manutDB(ano, mes, fileLog, timestampLog, DEBUG)
 mes=mes-1
-manutDB(ano, mes, fileLog, timestampLog)
+manutDB(ano, mes, fileLog, timestampLog, DEBUG)
 
 #
 ## Manutencao de Disco
