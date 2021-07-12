@@ -9,14 +9,14 @@ from datetime import datetime
 from _conf.conf import DBUSER, DBPASS, DBBASE, DBHOST, PATHLOG
 
 #
-## Inicialização de Variáveis
+## Inicializacao de Variaveis
 horaAtual = datetime.now().strftime('%H:%M')
 timestampLog = datetime.now().strftime('%Y%m%d_%H%M%S')
 logName = "pysqlfix_" + timestampLog + ".log"
 fileLog = open(PATHLOG + logName, "w")
 
 #
-## Conexão com a base
+## Conexao com a base
 conectaBase = mysql.connector.connect(
   host=DBHOST,
   user=DBUSER,
@@ -25,7 +25,7 @@ conectaBase = mysql.connector.connect(
 )
 
 #
-## Funções
+## Funcoes
 def gravaLog(tp, fileLog, timestampLog, msg):
   hr = datetime.now().strftime('%Y%m%d_%H%M%S')
   if tp==1:
@@ -43,7 +43,7 @@ def gravaLog(tp, fileLog, timestampLog, msg):
 
 #
 ##
-msg="Iniciando manutenção no banco de dados"
+msg="Iniciando manutencao no banco de dados"
 gravaLog(1, fileLog, timestampLog, msg)
 
 #
@@ -61,7 +61,7 @@ def getAnoMes(conectaBase):
 ano, mes = getAnoMes(conectaBase)
 #
 ##
-msg="Ano, Mês: " + str(ano) + "-" + str(mes)
+msg="Ano, Mes: " + str(ano) + "-" + str(mes)
 gravaLog(1,fileLog, timestampLog, msg)
 
 #
@@ -137,7 +137,7 @@ def deleteMensagemIn(conectaBase, ano, mes):
   gravaLog(1,fileLog, timestampLog, msg)
 
 #
-## Manutenção de Disco
+## Manutencao de Disco
 def optimizeTable(tbl):
   msg="Iniciando Optimize..." + tbl
   gravaLog(1, fileLog, timestampLog, msg)
@@ -149,9 +149,9 @@ def optimizeTable(tbl):
 
 
 #
-# Manutenção (Com Delete)
+# Manutencao (Com Delete)
 def manutDB(ano, mes, fileLog, timestampLog):
-  msg="Validando Ano Mês: " +str(ano)+"-"+str(mes)
+  msg="Validando Ano Mes: " +str(ano)+"-"+str(mes)
   gravaLog(1,fileLog, timestampLog, msg)
   gravaLog(1,fileLog, timestampLog, "Contando Rest...")
   countRestIn = countRest(conectaBase, ano, mes)
@@ -174,15 +174,15 @@ def manutDB(ano, mes, fileLog, timestampLog):
   gravaLog(1,fileLog, timestampLog, msg)
 
   #
-  ## A partir de Mês-3 realiza manutenção na tabela principal
+  ## A partir de Mes-3 realiza manutencao na tabela principal
   ## desde que o histórico esteja correto.
   msg="Validando Mensagem e Mensagem History para: " +str(ano)+"-"+str(mes)
   gravaLog(1,fileLog, timestampLog, msg)
   if countMensagemIn > 0:
     if countMensagemIn == countHistMensagemIn:
-      msg="Quantidade de registros em mensagem e mensagem_history é igual para: " +str(ano)+"-"+str(mes)
+      msg="Quantidade de registros em mensagem e mensagem_history e igual para: " +str(ano)+"-"+str(mes)
       gravaLog(1,fileLog, timestampLog, msg)
-      msg="Realizando manutenção em mensagem para: " +str(ano)+"-"+str(mes)
+      msg="Realizando manutencao em mensagem para: " +str(ano)+"-"+str(mes)
       gravaLog(1,fileLog, timestampLog, msg)
       deleteMensagemIn(conectaBase, ano, mes)
     else:
@@ -196,9 +196,9 @@ def manutDB(ano, mes, fileLog, timestampLog):
   gravaLog(1,fileLog, timestampLog, msg)
   if countRestIn > 0:
     if countRestIn == countHistRestIn:
-      msg="Quantidade de registros em rest e rest_history é igual para: " +str(ano)+"-"+str(mes)
+      msg="Quantidade de registros em rest e rest_history e igual para: " +str(ano)+"-"+str(mes)
       gravaLog(1,fileLog, timestampLog, msg)
-      msg="Realizando manutenção em rest para: " +str(ano)+"-"+str(mes)
+      msg="Realizando manutencao em rest para: " +str(ano)+"-"+str(mes)
       gravaLog(1,fileLog, timestampLog, msg)
       deleteRestIn(conectaBase, ano, mes)
     else:
@@ -211,7 +211,7 @@ def manutDB(ano, mes, fileLog, timestampLog):
 #
 # Check (Sem Delete)
 def checkDB(ano, mes, fileLog, timestampLog):
-  msg="Validando Ano Mês: " +str(ano)+"-"+str(mes)
+  msg="Validando Ano Mes: " +str(ano)+"-"+str(mes)
   gravaLog(1,fileLog, timestampLog, msg)
   gravaLog(1,fileLog, timestampLog, "Contando Rest...")
   countRestIn = countRest(conectaBase, ano, mes)
@@ -236,7 +236,7 @@ def checkDB(ano, mes, fileLog, timestampLog):
   msg="Validando Mensagem e Mensagem History para: " +str(ano)+"-"+str(mes)
   gravaLog(1,fileLog, timestampLog, msg)
   if countMensagemIn == countHistMensagemIn:
-    msg="Quantidade de registros em mensagem e mensagem_history é igual para: " +str(ano)+"-"+str(mes)
+    msg="Quantidade de registros em mensagem e mensagem_history e igual para: " +str(ano)+"-"+str(mes)
     gravaLog(2,fileLog, timestampLog, msg)
   else:
     msg="ERRO verificar mensagem history <> mensagem para: " +str(ano)+"-"+str(mes)
@@ -245,28 +245,27 @@ def checkDB(ano, mes, fileLog, timestampLog):
   msg="Validando Rest e Rest History para: " +str(ano)+"-"+str(mes)
   gravaLog(1, fileLog, timestampLog, msg)
   if countRestIn == countHistRestIn:
-    msg="Quantidade de registros em Rest e Rest_history é igual para: " +str(ano)+"-"+str(mes)
+    msg="Quantidade de registros em Rest e Rest_history e igual para: " +str(ano)+"-"+str(mes)
     gravaLog(2, fileLog, timestampLog, msg)
   else:
     msg="ERRO verificar rest history <> Rest para: " +str(ano)+"-"+str(mes)
     gravaLog(4, fileLog, timestampLog, msg)
 
-
 #
-## Check (Mês Atual -1 e Mês Atual -2)
+## Check (Mes Atual -1 e Mes Atual -2)
 mes=mes-1
 checkDB(ano, mes, fileLog, timestampLog)
 mes=mes-1
 checkDB(ano, mes, fileLog, timestampLog)
 
 #
-## Manut (Mês Atual -3 e Mês Atual -4)
+## Manut (Mes Atual -3 e Mes Atual -4)
 mes=mes-1
 manutDB(ano, mes, fileLog, timestampLog)
 mes=mes-1
 manutDB(ano, mes, fileLog, timestampLog)
 
 #
-## Manutenção de Disco
+## Manutencao de Disco
 optimizeTable("iiot_rest_in")
 optimizeTable("iiot_mensagem_in_v2")
