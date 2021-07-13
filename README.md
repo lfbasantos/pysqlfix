@@ -1,7 +1,8 @@
 # pysqlfix
 Database Fixes and Maintenance for MySQL with Python
+lfbasantos@gmail.com
 
-# Instrucoes
+## Informações
 Este script realiza manutenções no banco de dados para o projeto IntegraIoT.
 
 As tabelas iiot_rest_in e iiot_mensagem_in_v2 sao as tabelas de entrada da API dos dispositivos, recebendo as mensagens em tempo real sendo disparadas pelas diversas fontes.
@@ -14,4 +15,52 @@ Mensalmente, é realizada uma manutenção de forma a remove das tabelas iiot_re
 
 Desta maneira, as tabelas "_history" contém todos os dados, e as tabelas "in" irão conter apenas 3 meses de dados.
 
-# lfbasantos@gmail.com
+## Execução
+1) verificar dados de acesso ao ambiente na pasta _conf local (essa pasta contém dados de acesso ao banco e não é sincronizada no github)
+2) Validar se o arquivo 'param/param.py' está configurado como DEBUG=0 (Debug = 1 não realiza os deletes no banco, e deve ser usado para validar os counts do script)
+3) Executar python3 sqlfix.py. O script irá jogar as informações na tela, e gravar o log de execução no arquivo .log (verifique logName = "pysqlfix_" + timestampLog + ".log" em sqlfix.py)
+4) Após realizar as manutenções podem ser executadas as seguintes consultas para validar os resultados:
+
+````
+select 
+	count(*), year(dt_ins), month(dt_ins)
+from
+	iiot_rest_in
+group by
+	year(dt_ins), month(dt_ins)
+order by
+	year(dt_ins), month(dt_ins)
+````
+
+````
+select 
+	count(*), year(dt_ins), month(dt_ins)
+from
+	iiot_rest_in_history
+group by
+	year(dt_ins), month(dt_ins)
+order by
+	year(dt_ins), month(dt_ins)
+````
+
+````
+select 
+	count(*), year(dt_msg), month(dt_msg)
+from
+	iiot_mensagem_in_v2
+group by
+	year(dt_msg), month(dt_msg)
+order by
+	year(dt_msg), month(dt_msg)
+````
+
+````
+select 
+	count(*), year(dt_msg), month(dt_msg)
+from
+	iiot_mensagem_in_v2_history
+group by
+	year(dt_msg), month(dt_msg)
+order by
+	year(dt_msg), month(dt_msg)
+````
