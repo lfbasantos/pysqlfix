@@ -27,7 +27,7 @@ conectaBase = mysql.connector.connect(
 #
 ## Funcoes
 def gravaLog(tp, logName, timestampLog, msg):
-  fileLog = open(PATHLOG + logName, "w")
+  fileLog = open(PATHLOG + logName, "a")
   hr = datetime.now().strftime('%Y%m%d_%H%M%S')
   if tp==1:
     flag_tp = "[i]"
