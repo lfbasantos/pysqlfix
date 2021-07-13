@@ -13,3 +13,5 @@ O sistema IntegraIoT também grava automaticamente os mesmos registros nas tabel
 Mensalmente, é realizada uma manutenção de forma a remove das tabelas iiot_rest_in e iiot_mensagem_in_v2 os registros desnecessários, referentes a Mês Atual - 3 em diante.
 
 Desta maneira, as tabelas "_history" contém todos os dados, e as tabelas "in" irão conter apenas 3 meses de dados.
+
+# lfbasantos@gmail.com
