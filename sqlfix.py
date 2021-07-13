@@ -6,8 +6,8 @@ from datetime import datetime
 
 #
 ## Import Params
-from _conf.conf import DBUSER, DBPASS, DBBASE, DBHOST, PATHLOG
-from param.param import MYSQLCHECK, DEBUG
+from _conf.conf import DBUSER, DBPASS, DBBASE, DBHOST, PATHLOG, MYSQLCHECK
+from param.param import DEBUG
 
 #
 ## Inicializacao de Variaveis
