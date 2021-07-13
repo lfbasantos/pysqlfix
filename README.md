@@ -15,3 +15,50 @@ Mensalmente, é realizada uma manutenção de forma a remove das tabelas iiot_re
 Desta maneira, as tabelas "_history" contém todos os dados, e as tabelas "in" irão conter apenas 3 meses de dados.
 
 # lfbasantos@gmail.com
+1) verificar dados de acesso ao ambiente na pasta _conf local (essa pasta contém dados de acesso ao banco e não é sincronizada no github)
+2) Validar se o arquivo 'param/param.py' está configurado como DEBUG=0 (Debug = 1 não realiza os deletes no banco, e deve ser usado para validar os counts do script)
+3) Após realizar as manutenções podem ser executadas as seguintes consultas para validar os resultados:
+
+````
+select 
+	count(*), year(dt_ins), month(dt_ins)
+from
+	iiot_rest_in
+group by
+	year(dt_ins), month(dt_ins)
+order by
+	year(dt_ins), month(dt_ins)
+````
+
+````
+select 
+	count(*), year(dt_ins), month(dt_ins)
+from
+	iiot_rest_in_history
+group by
+	year(dt_ins), month(dt_ins)
+order by
+	year(dt_ins), month(dt_ins)
+````
+
+````
+select 
+	count(*), year(dt_msg), month(dt_msg)
+from
+	iiot_mensagem_in_v2
+group by
+	year(dt_msg), month(dt_msg)
+order by
+	year(dt_msg), month(dt_msg)
+````
+
+````
+select 
+	count(*), year(dt_msg), month(dt_msg)
+from
+	iiot_mensagem_in_v2_history
+group by
+	year(dt_msg), month(dt_msg)
+order by
+	year(dt_msg), month(dt_msg)
+````
