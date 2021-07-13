@@ -175,7 +175,7 @@ def manutDB(ano, mes, fileLog, timestampLog, DEBUG):
 
   #
   ## A partir de Mes-3 realiza manutencao na tabela principal
-  ## desde que o histórico esteja correto.
+  ## desde que o historico esteja correto.
   msg="Validando Mensagem e Mensagem History para: " +str(ano)+"-"+str(mes)
   gravaLog(1,fileLog, timestampLog, msg)
   if countMensagemIn > 0:
